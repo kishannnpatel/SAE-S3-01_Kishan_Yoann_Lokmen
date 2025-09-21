@@ -13,4 +13,10 @@ module com.example.sae_dev_kishan_yoann_lokmen {
 
     opens com.example.sae_dev_kishan_yoann_lokmen to javafx.fxml;
     exports com.example.sae_dev_kishan_yoann_lokmen;
+
+
+
+    opens controller to javafx.fxml;
+    opens modeles to javafx.fxml;
+    opens vues to javafx.fxml;
 }
