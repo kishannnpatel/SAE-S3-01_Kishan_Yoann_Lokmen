@@ -74,52 +74,66 @@ public class Sid extends Acteur {
         estRalenti.set(ralenti);
     }
 
+    // refractor
+
+    private int calculerDeplacementX(Set<KeyCode> touches) {
+        int vitesse = isEstRalenti() ? 2 : 4;
+        int dx = 0;
+
+        if (touches.contains(KeyCode.D)) {
+            setDirection("droite");
+            dx += vitesse;
+            if (isEstRalenti()) finRalenti++;
+        }
+        if (touches.contains(KeyCode.Q)) {
+            setDirection("gauche");
+            dx -= vitesse;
+            if (isEstRalenti()) finRalenti++;
+        }
+        return dx;
+    }
+
+    private void gererSaut(Set<KeyCode> touches) {
+        boolean veutSauter = touches.contains(KeyCode.SPACE);
+
+        if (veutSauter) {
+            // Déclenchement d’un saut unique tant que la touche n’a pas été relâchée
+            if (!enSaut && !aDejaSaute) {
+                vitesseY = SAUT_FORCE; // (déjà défini dans ta classe)
+                enSaut = true;
+                aDejaSaute = true;     // empêche de relancer le saut tant que SPACE reste enfoncé
+            }
+        } else {
+            // La touche a été relâchée → on autorise un nouveau saut
+            aDejaSaute = false;
+        }
+    }
 
     /*
      * Fait agir Sid en fonction des touches pressées.
      * Gère déplacement horizontal, saut, et collisions.
     */
+
     @Override
     public void agir(Set<KeyCode> touches) {
-        int nouvelleX = getX();
+
 
         if (finRalenti == 240) {
             finRalenti = 0;
             setEstRalenti(false);
         }
 
-        if (touches.contains(KeyCode.D)) {
-            nouvelleX = getX() + (isEstRalenti() ? 2 : 4);
-            setDirection("droite");
-            if (isEstRalenti()) finRalenti++;
-        }
-        if (touches.contains(KeyCode.Q)) {
-            nouvelleX = getX() - (isEstRalenti() ? 2 : 4);
-            setDirection("gauche");
-            if (isEstRalenti()) finRalenti++;
-        }
+        int nouvelleX = getX() + calculerDeplacementX(touches);
 
         // Tester collision avant de bouger
         hitbox.setPosition(nouvelleX, getY());
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
             setX(nouvelleX);
         }
-        hitbox.setPosition(getX(), getY());
 
-        if (touches.contains(KeyCode.SPACE)) {
-            if (!enSaut && !aDejaSaute) {
-                vitesseY = SAUT_FORCE;
-                enSaut = true;
-                aDejaSaute = true; // on empêche le saut tant que la touche est enfoncée
-            }
-        } else {
-            aDejaSaute = false; // la touche a été relâchée
-        }
-
-
+        gererSaut(touches);
         // Met à jour la position de la hitbox
         hitbox.setPosition(getX(), getY());
-
     }
 
 
@@ -162,13 +176,12 @@ public class Sid extends Acteur {
 
         }
         hitbox.setPosition(getX(), getY());
-
     }
-
 
     /*
      * Vérifie si la hitbox de Sid entre en collision avec un des blocs solides.
     */
+
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitbox.collisionAvec(bloc)) {

@@ -54,7 +54,7 @@ public class ObjetEnMainVue {
             imageView.setImage(null);
             labelNom.setText("Vide");
         } else {
-            Image image = new Image(getClass().getResourceAsStream("/fr/mbouklikha/dev/sae_glacium/images/item/" + objetEnMain.getNom() + ".png"));
+            Image image = new Image(getClass().getResourceAsStream("/images/item/" + objetEnMain.getNom() + ".png"));
             imageView.setImage(image);
             labelNom.setText(objetEnMain.getNom());
         }

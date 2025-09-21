@@ -105,10 +105,8 @@ public class Sorcier extends Acteur {
                 setY((getY() / tailleBloc + 1) * tailleBloc);
                 vitesseY = 0.1;
             }
-
         }
         hitboxSorcier.setPosition(getX(), getY());
-
     }
 
 

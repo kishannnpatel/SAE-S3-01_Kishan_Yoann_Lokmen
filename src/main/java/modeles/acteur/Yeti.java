@@ -143,8 +143,6 @@ public class Yeti extends Acteur {
         hitboxYeti.setPosition(getX(), getY());
     }
 
-
-
     /*
      * Vérifie si la hitbox du Yeti entre en collision avec un des blocs solides.
     */
