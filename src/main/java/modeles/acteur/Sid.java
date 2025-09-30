@@ -142,8 +142,12 @@ public class Sid extends Acteur {
         } else {
             setY(newY);
         }
-
         hitbox.setPosition(getX(), newY);
+        gererCollisionVerticale(newY,tailleBloc);
+        hitbox.setPosition(getX(), getY());
+
+    }
+    public void gererCollisionVerticale(int newY,int tailleBloc){
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
             setY(newY);
             hitbox.setPosition(getX(), newY);
@@ -161,10 +165,7 @@ public class Sid extends Acteur {
             }
 
         }
-        hitbox.setPosition(getX(), getY());
-
     }
-
 
     /*
      * Vérifie si la hitbox de Sid entre en collision avec un des blocs solides.

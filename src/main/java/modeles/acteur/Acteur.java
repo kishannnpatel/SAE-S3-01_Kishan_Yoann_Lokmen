@@ -105,8 +105,4 @@ public abstract class Acteur {
     public String toString() {
         return "x=" + x + ", y=" + y;
     }
-
-
-
-
 }
