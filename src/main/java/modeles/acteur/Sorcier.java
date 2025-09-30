@@ -40,14 +40,12 @@ public class Sorcier extends Acteur {
     public void agir(Set<KeyCode> touches) {
         int dx = sid.getX() - getX();
         EclatFeu feu = new EclatFeu(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid);
-
         // Orientation graphique
         if (dx > 0) {
             orientation.set("droite");
         } else {
             orientation.set("gauche");
         }
-
         // Logique "discute" vs "occupe"
         if (Math.abs(dx) > 50) {
             occupe = false;
@@ -56,7 +54,6 @@ public class Sorcier extends Acteur {
             occupe = true;
             direction.set("occupe");
         }
-
         if(sid.getHitbox().collisionAvec(this.hitboxSorcier)){
             if(!sid.getInventaire().aAssez(feu,1)){
                 sid.getInventaire().ajouter(feu,1);
@@ -73,6 +70,7 @@ public class Sorcier extends Acteur {
      * Si une collision est détectée en descendant, arrête la chute et ajuste la position.
      * Si une collision est détectée en montant, stoppe la montée et repositionne juste en dessous du bloc.
     */
+    /*
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
@@ -105,10 +103,56 @@ public class Sorcier extends Acteur {
                 setY((getY() / tailleBloc + 1) * tailleBloc);
                 vitesseY = 0.1;
             }
-
         }
         hitboxSorcier.setPosition(getX(), getY());
+    }
+*/
+    @Override
+    public void appliquerGravite(int[][] map, int tailleBloc) {
+        // Appliquer la gravité
+        vitesseY += GRAVITE;
+        int newY = (int) (getY() + vitesseY);
+        // Vérifier collision avec la map
+        if (collisionAvecMap(map, tailleBloc, newY)) {
+            gererCollisionMap(map, tailleBloc);
+        } else {
+            setY(newY);
+        }
+        // Vérifier collision avec l'environnement
+        hitboxSorcier.setPosition(getX(), getY());
+        if (collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
+            gererCollisionBlocs(tailleBloc);
+        }
+        // Mise à jour finale de la hitbox
+        hitboxSorcier.setPosition(getX(), getY());
+    }
 
+    private boolean collisionAvecMap(int[][] map, int tailleBloc, int newY) {
+        int caseX = getX() / tailleBloc;
+        int caseY = (newY + 62) / tailleBloc;
+        if (caseY < map.length && caseX < map[0].length) {
+            return (map[caseY][caseX] == 1 || map[caseY][caseX] == 2);
+        }
+        return false;
+    }
+
+    private void gererCollisionMap(int[][] map, int tailleBloc) {
+        int caseY = (int) ((getY() + vitesseY + 62) / tailleBloc);
+        vitesseY = 0;
+        enSaut = false;
+        setY(caseY * tailleBloc - 62);
+    }
+
+    private void gererCollisionBlocs(int tailleBloc) {
+        if (vitesseY > 0) {
+            // Collision avec le sol
+            enSaut = false;
+            setY((int) (getY() / tailleBloc) * tailleBloc);
+        } else if (vitesseY < 0) {
+            // Collision en montant
+            setY((getY() / tailleBloc + 1) * tailleBloc);
+            vitesseY = 0.1;
+        }
     }
 
 

@@ -131,10 +131,8 @@ public class Sid extends Acteur {
     public void appliquerGravite(int[][] map, int tailleBloc) {
         vitesseY += GRAVITE;
         int newY = (int) (getY() + vitesseY);
-
         int caseX = getX() / tailleBloc;
         int caseY = (newY + 56) / tailleBloc;
-
         if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 || map[caseY][caseX] == 2) {
             vitesseY = 0;
             enSaut = false;
@@ -145,7 +143,6 @@ public class Sid extends Acteur {
         hitbox.setPosition(getX(), newY);
         gererCollisionVerticale(newY,tailleBloc);
         hitbox.setPosition(getX(), getY());
-
     }
     public void gererCollisionVerticale(int newY,int tailleBloc){
         if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
