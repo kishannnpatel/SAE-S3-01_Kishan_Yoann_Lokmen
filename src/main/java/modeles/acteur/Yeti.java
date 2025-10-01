@@ -57,6 +57,7 @@ public class Yeti extends Acteur {
      * en ralentissant Sid.
      * Sinon, le Yeti se déplace horizontalement vers Sid en évitant les collisions.
     */
+    /*
     public void agir(Set<KeyCode> touches) {
         if (getPv() < 0 || sid == null || !sid.estVivant()) {
             setDirection("immobile");
@@ -115,7 +116,79 @@ public class Yeti extends Acteur {
         hitboxYeti.setPosition(getX(), getY());
     }
 
+*/
+    public void agir(Set<KeyCode> touches) {
+        if (!estPretAAgir()) {
+            arreterAction();
+        } else {
+            int dx = sid.getX() - getX();
+            int dy = sid.getY() - getY();
 
+            if (horsPorteeVerticale(dy)) {
+                arreterAction();
+            } else if (estEnPorteeDeFrappe(dx)) {
+                attaquer(dx);
+            } else if (estEnPorteeDeChasse(dx)) {
+                poursuivre(dx);
+            } else {
+                arreterAction();
+            }
+        }
+
+        // Mise à jour finale de la hitbox
+        hitboxYeti.setPosition(getX(), getY());
+    }
+
+    private boolean estPretAAgir() {
+        return getPv() >= 0 && sid != null && sid.estVivant();
+    }
+
+    private boolean horsPorteeVerticale(int dy) {
+        return Math.abs(dy) > 50;
+    }
+
+    private boolean estEnPorteeDeFrappe(int dx) {
+        return Math.abs(dx) <= 20;
+    }
+
+    private boolean estEnPorteeDeChasse(int dx) {
+        return Math.abs(dx) <= 180;
+    }
+
+    private void arreterAction() {
+        frappeEnCours = false;
+        setDirection("immobile");
+    }
+
+    private void attaquer(int dx) {
+        frappeEnCours = true;
+        setDirection(dx > 0 ? "droite" : "gauche");
+        sid.setEstRalenti(true);
+
+        if (compteurDegats == 0) {
+            sid.decrementerPv(5);
+        }
+
+        compteurDegats++;
+        if (compteurDegats >= 30) {
+            sid.decrementerPv(5);
+            compteurDegats = 0;
+        }
+    }
+
+    private void poursuivre(int dx) {
+        frappeEnCours = false;
+        int deplacementX = (dx > 0 ? VITESSE_X : -VITESSE_X);
+
+        // Vérifie collision latérale
+        hitboxYeti.setPosition(getX() + deplacementX, getY());
+        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
+            setX(getX() + deplacementX);
+        }
+
+        setDirection(dx > 0 ? "droite" : "gauche");
+        hitboxYeti.setPosition(getX(), getY());
+    }
 
     /*
      * Applique la gravité au Yeti en mettant à jour sa position verticale,
@@ -156,4 +229,7 @@ public class Yeti extends Acteur {
         }
         return false;
     }
+
+
+
 }
