@@ -57,66 +57,6 @@ public class Yeti extends Acteur {
      * en ralentissant Sid.
      * Sinon, le Yeti se déplace horizontalement vers Sid en évitant les collisions.
     */
-    /*
-    public void agir(Set<KeyCode> touches) {
-        if (getPv() < 0 || sid == null || !sid.estVivant()) {
-            setDirection("immobile");
-            frappeEnCours = false;
-        } else {
-
-        int dx = sid.getX() - getX();
-        int dy = sid.getY() - getY();
-
-        if (Math.abs(dy) > 50) {
-            frappeEnCours = false;
-            setDirection("immobile");
-        } else if (Math.abs(dx) <= 20) {
-            frappeEnCours = true;
-            setDirection(dx > 0 ? "droite" : "gauche");
-            sid.setEstRalenti(true);
-
-            if(compteurDegats == 0){
-                sid.decrementerPv(5);
-            }
-
-            compteurDegats ++;
-
-            if(compteurDegats >= 30) {
-                sid.decrementerPv(5);
-                compteurDegats = 0;
-            }
-
-        } else if (Math.abs(dx) <= 180) {
-            frappeEnCours = false;
-            int deplacementX = (dx > 0 ? VITESSE_X : -VITESSE_X);
-
-            // Collision latérale comme pour Sid
-            hitboxYeti.setPosition(getX() + deplacementX, getY());
-            boolean collision = false;
-            for (Hitbox bloc : environnement.getTerrain().getHitboxBlocsSolides()) {
-                if (hitboxYeti.collisionAvec(bloc)) {
-                    collision = true;
-                    break;
-                }
-            }
-
-            if (!collision) {
-                setX(getX() + deplacementX);
-            }
-
-            setDirection(dx > 0 ? "droite" : "gauche");
-            hitboxYeti.setPosition(getX(), getY());
-        } else {
-            frappeEnCours = false;
-            setDirection("immobile");
-            }
-        }
-
-        // Mise à jour finale de la hitbox
-        hitboxYeti.setPosition(getX(), getY());
-    }
-
-*/
     public void agir(Set<KeyCode> touches) {
         if (!estPretAAgir()) {
             arreterAction();

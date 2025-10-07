@@ -70,43 +70,6 @@ public class Sorcier extends Acteur {
      * Si une collision est détectée en descendant, arrête la chute et ajuste la position.
      * Si une collision est détectée en montant, stoppe la montée et repositionne juste en dessous du bloc.
     */
-    /*
-    @Override
-    public void appliquerGravite(int[][] map, int tailleBloc) {
-        vitesseY += GRAVITE;
-        int newY = (int) (getY() + vitesseY);
-
-        int caseX = getX() / tailleBloc;
-        int caseY = (newY + 62) / tailleBloc;
-
-        if (caseY < map.length && caseX < map[0].length && map[caseY][caseX] == 1 || map[caseY][caseX] == 2) {
-            vitesseY = 0;
-            enSaut = false;
-            setY(caseY * tailleBloc - 62);
-        } else {
-            setY(newY);
-        }
-
-        hitboxSorcier.setPosition(getX(), newY);
-        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-            setY(newY);
-            hitboxSorcier.setPosition(getX(), newY);
-        } else {
-            if (vitesseY > 0) {
-                // Collision avec le sol, on bloque la chute
-                enSaut = false;
-                setY((int) (getY() / tailleBloc) * tailleBloc);
-            }
-            else if (vitesseY < 0) {
-                // En montée : on se cogne la tête
-                // On aligne Sid juste en dessous du bloc touché
-                setY((getY() / tailleBloc + 1) * tailleBloc);
-                vitesseY = 0.1;
-            }
-        }
-        hitboxSorcier.setPosition(getX(), getY());
-    }
-*/
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         // Appliquer la gravité
