@@ -15,13 +15,13 @@ public class Arc extends Outil {
 
     }
 
-
     public void fonction(int x, int y){
         int sourisX = x * 32;
         int sourisY = y * 32;
 
         int persoX = getSid().getX();
         int persoY = getSid().getY() + 28;
+
 
         int dx = persoX - sourisX;
         int dy = persoY - sourisY;

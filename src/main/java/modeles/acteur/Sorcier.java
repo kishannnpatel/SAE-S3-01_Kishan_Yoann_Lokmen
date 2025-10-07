@@ -35,7 +35,7 @@ public class Sorcier extends Acteur {
      * Définit le comportement du sorcier à chaque frame en fonction des touches pressées.
      * Le sorcier s'oriente vers Sid, détermine s'il est "occupé" ou "discute" selon la distance.
      * Si la hitbox du sorcier touche Sid, ajoute un éclat de feu à l'inventaire de Sid s'il n'en a pas déjà.
-    */
+     */
     @Override
     public void agir(Set<KeyCode> touches) {
         int dx = sid.getX() - getX();
@@ -69,7 +69,7 @@ public class Sorcier extends Acteur {
      * Applique la gravité sur le sorcier, met à jour sa position verticale et gère les collisions avec les blocs solides.
      * Si une collision est détectée en descendant, arrête la chute et ajuste la position.
      * Si une collision est détectée en montant, stoppe la montée et repositionne juste en dessous du bloc.
-    */
+     */
     @Override
     public void appliquerGravite(int[][] map, int tailleBloc) {
         // Appliquer la gravité
@@ -121,7 +121,7 @@ public class Sorcier extends Acteur {
 
     /*
      * Vérifie si la hitbox du sorcier entre en collision avec un bloc solide.
-    */
+     */
     public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
         for (Hitbox bloc : blocsSolides) {
             if (hitboxSorcier.collisionAvec(bloc)) {

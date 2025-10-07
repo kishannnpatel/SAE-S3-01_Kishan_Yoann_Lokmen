@@ -113,8 +113,6 @@ public class Controller {
         sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),8);
 
 
-
-
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
         inventaireVue.initialiserCases(inv);
         inventaireVue.mettreAJourInventaire(inv);

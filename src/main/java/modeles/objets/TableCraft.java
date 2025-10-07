@@ -14,7 +14,6 @@ public class TableCraft {
         this.sid = sid;
     }
 
-
     /*
      * Crée une pioche si l'inventaire contient au moins 3 glaces et 2 bois.
      * Si les conditions sont remplies, la pioche est ajoutée à l'inventaire
@@ -36,7 +35,6 @@ public class TableCraft {
         }
     }
 
-
     /*
      * Crée une dague si l'inventaire contient au moins 3 glaces et 2 neiges.
      * Si les conditions sont remplies, la dague est ajoutée à l'inventaire
@@ -57,7 +55,6 @@ public class TableCraft {
             System.out.println("Pas assez de neige");
         }
     }
-
 
     /*
      * Crée un arc de feu si l'inventaire contient au moins :
