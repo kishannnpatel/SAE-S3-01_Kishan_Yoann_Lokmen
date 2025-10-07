@@ -168,7 +168,6 @@ public class Controller {
                 }
             });
 
-
             zoneJeu.requestFocus();
 
             initAnimation();
@@ -191,7 +190,6 @@ public class Controller {
                     temps++;
                 }
         );
-
         gameLoop.getKeyFrames().add(keyFrame);
     }
 }
