@@ -24,6 +24,7 @@ public class Yeti extends Acteur {
     private final Environnement environnement;
     private final Hitbox hitboxYeti;
 
+
     public Yeti(Environnement env, Sid sid) {
         super("Yeti", 100, 800, 350, env);
         this.sid = sid;
