@@ -2,7 +2,9 @@ package modeles.objets;
 
 
 import modeles.acteur.Sid;
-import modeles.objets.Bois;
+import modeles.objets.outils.Arme.Arc;
+import modeles.objets.outils.Arme.Dague;
+import modeles.objets.outils.Pioche;
 
 public class TableCraft {
 
@@ -46,7 +48,7 @@ public class TableCraft {
 
         if (sid.getInventaire().aAssez(glace,3) && sid.getInventaire().aAssez(neige,2)) {
             System.out.println("On peut crafter !");
-            sid.getInventaire().ajouterItem(new Dague(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid));
+            sid.getInventaire().ajouterItem(new Dague(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid,10));
             sid.getInventaire().retirer(glace,3);
             sid.getInventaire().retirer(neige,2);
         } else if (!sid.getInventaire().aAssez(glace,3)){
@@ -69,7 +71,7 @@ public class TableCraft {
 
         if (sid.getInventaire().aAssez(feu,1) && sid.getInventaire().aAssez(bois,3) && sid.getInventaire().aAssez(glace,5)) {
             System.out.println("On peut crafter !");
-            sid.getInventaire().ajouterItem(new Arc(sid.getEnvironnement().getTerrain(), sid.getInventaire(), sid));
+            sid.getInventaire().ajouterItem(new Arc(sid.getEnvironnement().getTerrain(),sid.getInventaire(),sid,10));
             sid.getInventaire().retirer(feu,1);
             sid.getInventaire().retirer(bois,2);
             sid.getInventaire().retirer(glace,5);

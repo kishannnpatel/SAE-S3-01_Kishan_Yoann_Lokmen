@@ -200,5 +200,17 @@ public class Sid extends Acteur {
     public void setObjetEnMain(Objets objet) {
         this.objetEnMain = objet;
     }
+    public boolean objetPresent(){
+        if(this.objetEnMain !=null){
+            return true;
+        }
+        return false;
+    }
+    public void utiliserObjet(int x,int y){
+        if(objetPresent()){
+            objetEnMain.fonction(x,y);
+        }
+        else{System.out.println("Sid n'a pas d'objet en main");}
+    }
 
 }

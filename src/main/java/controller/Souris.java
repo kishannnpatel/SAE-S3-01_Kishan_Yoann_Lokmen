@@ -1,14 +1,12 @@
 package controller;
 
 import com.example.sae_dev_kishan_yoann_lokmen.Refractor.OutilsSouris;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import modeles.acteur.Sid;
 import modeles.monde.Terrain;
-import modeles.objets.Inventaire;
 import modeles.objets.Objets;
-import modeles.objets.Outil;
+import modeles.objets.outils.Outil;
 import modeles.objets.Ressource;
 import vues.monde.TerrainVue;
 
@@ -32,7 +30,7 @@ public class Souris {
     private void executerActionSurObjet(int x, int y, Class<?> typeAttendu) {
         Objets objet = sid.getObjetEnMain();
         if (objet != null && typeAttendu.isInstance(objet)) {
-            objet.fonction(x, y);
+            this.sid.utiliserObjet(x,y);
         }
         terrainVue.afficherMap(tilePane);
     }

@@ -25,7 +25,6 @@ public class Item {
         return quantite;
     }
 
-
     public void ajouter(int nb) {
         this.quantite.set(quantite.get() + nb);
     }
@@ -33,9 +32,6 @@ public class Item {
     public void supprimer(ObservableList<Item> inventaire) {
         inventaire.remove(this);
     }
-
-
-
 
 }
 

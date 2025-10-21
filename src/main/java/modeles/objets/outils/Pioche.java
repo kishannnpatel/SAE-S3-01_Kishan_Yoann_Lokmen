@@ -1,8 +1,11 @@
-package modeles.objets;
+package modeles.objets.outils;
 
 
 import modeles.acteur.Sid;
 import modeles.monde.Terrain;
+import modeles.objets.Glace;
+import modeles.objets.Inventaire;
+import modeles.objets.Neige;
 
 public class Pioche extends Outil {
 
