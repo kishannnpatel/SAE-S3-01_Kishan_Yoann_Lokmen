@@ -8,7 +8,7 @@ import modeles.objets.Inventaire;
 import modeles.objets.outils.Outil;
 
 public abstract class Arme extends Outil {
-
+//
     private final int DISTANCE_MAX;
     private int degat;
     private strategieArc strat;
