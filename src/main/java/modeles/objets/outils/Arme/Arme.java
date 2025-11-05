@@ -11,12 +11,15 @@ public abstract class Arme extends Outil {
 //
     private final int DISTANCE_MAX;
     private int degat;
-    private strategieArc strat;
+    private strategieArme strat;
+    String competence;
     public Arme(Terrain terrain, Inventaire inventaire, Sid sid,int degat,int distanceMax){
         super("arme", terrain, inventaire, sid);
         this.degat = degat;
         this.DISTANCE_MAX = distanceMax;
         this.strat = null;
+        this.competence = "la competence sers juste a montrer l'utilité d'un designpattern decorateur() "+degat;
+
     }
 //template : un code commun mais on met la partie qui change dans le code des sous classes
     public void fonction(int x, int y){
@@ -46,8 +49,15 @@ public abstract class Arme extends Outil {
     public int getDegat(){
         return this.degat;
     }
-    public void changerStrat(strategieArc strate){
+    public void changerStrat(strategieArme strate){
         this.strat=strate;
+    }
+    public String utiliserCompetence(){
+        return competence;
+    }
+
+    public int getDISTANCE_MAX() {
+        return DISTANCE_MAX;
     }
 }
 

@@ -2,7 +2,7 @@ package modeles.objets.outils.Arme;
 
 import java.util.Random;
 
-public class stratArc1 implements strategieArc{
+public class stratArme1 implements strategieArme {
     @Override
     public void lancerStrat(int degat) {
         //par exemple cette attaque permet de faire des coups critique

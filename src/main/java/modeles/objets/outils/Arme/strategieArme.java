@@ -1,5 +1,5 @@
 package modeles.objets.outils.Arme;
 
-public interface strategieArc {
+public interface strategieArme {
     public void lancerStrat(int degat);
 }
