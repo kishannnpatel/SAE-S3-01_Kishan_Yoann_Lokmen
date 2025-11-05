@@ -78,7 +78,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        this.env = new Environnement(992, 576);
+        this.env = Environnement.getInstance();
         TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
 
         sid = new Sid(env);
@@ -87,16 +87,12 @@ public class Controller {
         sourisVue = new SourisVue(zoneJeu);
         pdvVue = new PointsDeVieVue(zoneJeu, sid);
 
-
-
-
         yeti = new Yeti(env, sid);
         yetiVue = new YetiVue(yeti, zoneJeu);
 
         // Création du Sorcier et sa vue
         sorcier = new Sorcier(env, sid);
         sorcierVue = new SorcierVue(sorcier, zoneJeu);
-
 
         // Ajoute les acteurs dans l'environnement
         env.ajouterActeur(sid);
@@ -128,8 +124,6 @@ public class Controller {
         zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
 
         inventaireVue.setObjetEnMainVue(objetEnMainVue);
-
-
 
         // Table de Craft
         tableCraftVue = new TableCraftVue();

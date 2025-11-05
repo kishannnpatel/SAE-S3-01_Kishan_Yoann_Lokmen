@@ -1,12 +1,10 @@
 package controller;
 
 import com.example.sae_dev_kishan_yoann_lokmen.Refractor.OutilsSouris;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import modeles.acteur.Sid;
 import modeles.monde.Terrain;
-import modeles.objets.Inventaire;
 import modeles.objets.Objets;
 import modeles.objets.Outil;
 import modeles.objets.Ressource;
@@ -20,7 +18,6 @@ public class Souris {
     private TerrainVue terrainVue;
     private TilePane tilePane;
     private static final int DISTANCE_MAX = 128; // distance maximale autorisée (4 bloc)
-    public boolean peutCasser = false;
 
     public Souris(Sid sid, Terrain terrain, TerrainVue terrainVue, TilePane tilePane) {
         this.sid = sid;

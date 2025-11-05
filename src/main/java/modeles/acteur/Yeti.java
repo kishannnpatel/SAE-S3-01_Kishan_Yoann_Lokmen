@@ -1,173 +1,92 @@
 package modeles.acteur;
 
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
-import modeles.Hitbox;
-import modeles.acteur.Acteur;
+import modeles.acteur.Strategy.Chasse;
+import modeles.acteur.Strategy.Comportement;
+import modeles.acteur.Strategy.Frappe;
+import modeles.acteur.Strategy.Repos;
 import modeles.monde.Environnement;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public class Yeti extends Acteur {
 
     private final StringProperty direction = new SimpleStringProperty("immobile");
-    private static final double GRAVITE = 0.4;
     private static final int VITESSE_X = 2;
-    private double vitesseY = 0;
     private boolean frappeEnCours = false;
     private int compteurDegats = 0;
 
-    private Sid sid;
-    private final Environnement environnement;
-    private final Hitbox hitboxYeti;
+    // Strategy
+    private static final int PORTEE_FRAPPE = 20;
+    private static final int PORTEE_CHASSE = 180;
+    private static final int SEUIL_VERTICAL = 50;
+
+    private final Sid sid;
 
     public Yeti(Environnement env, Sid sid) {
-        super("Yeti", 100, 800, 350, env);
+        super("Yeti", 100, 800, 350,  60, 60);
         this.sid = sid;
-        this.environnement = env;
-        this.hitboxYeti = new Hitbox(getX(), getY(), 60, 60);
     }
+
+    // Strategy Methode
+
+    public int vitesseX() {
+        return VITESSE_X;
+    }
+
+    public int getCompteurDegats() {
+        return compteurDegats;
+    }
+
+    public void setCompteurDegats(int compteurDegats) {
+        this.compteurDegats = compteurDegats;
+    }
+
+    public void setFrappeEnCours(boolean frappeEnCours) {
+        this.frappeEnCours = frappeEnCours;
+    }
+
+    public void immobile() {
+       setDirection("immobile");
+    }
+
+    public void orienterVers(int dx){
+        setDirection(dx > 0 ? "droite" : "gauche");
+    }
+
+    public Sid cible(){
+        return sid;
+    }
+
+    public StringProperty getDirection() { return direction; }
+    public void setDirection(String direction) { this.direction.set(direction); }
+    public boolean isFrappeEnCours() { return frappeEnCours; }
 
     @Override
-    public Hitbox getHitbox() {
-        return hitboxYeti;
-    }
-
-    public StringProperty getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction.set(direction);
-    }
-
-
-    public boolean isFrappeEnCours() {
-        return frappeEnCours;
-    }
-
-
-    /*
-     * Gère le comportement du Yeti selon la position de Sid et son état.
-     * Si Sid est hors de portée verticale, le Yeti reste immobile.
-     * Si Sid est proche horizontalement, le Yeti attaque et inflige des dégâts périodiques,
-     * en ralentissant Sid.
-     * Sinon, le Yeti se déplace horizontalement vers Sid en évitant les collisions.
-    */
     public void agir(Set<KeyCode> touches) {
-        if (!estPretAAgir()) {
-            arreterAction();
-        } else {
-            int dx = sid.getX() - getX();
-            int dy = sid.getY() - getY();
+        if (!estPretAAgir()) { arreterAction(); return; }
 
-            if (horsPorteeVerticale(dy)) {
-                arreterAction();
-            } else if (estEnPorteeDeFrappe(dx)) {
-                attaquer(dx);
-            } else if (estEnPorteeDeChasse(dx)) {
-                poursuivre(dx);
-            } else {
-                arreterAction();
-            }
-        }
+        int dx = sid.getX() - getX();
+        int dy = sid.getY() - getY();
 
-        // Mise à jour finale de la hitbox
-        hitboxYeti.setPosition(getX(), getY());
+        Comportement strat = choisirStrat(dx, dy);
+        strat.agir(this, dx, dy);
     }
 
-    private boolean estPretAAgir() {
-        return getPv() >= 0 && sid != null && sid.estVivant();
+    private Comportement choisirStrat(int dx, int dy) {
+        if (Math.abs(dy) > SEUIL_VERTICAL) return new Repos();
+        if (Math.abs(dx) <= PORTEE_FRAPPE)   return new Frappe();
+        if (Math.abs(dx) <= PORTEE_CHASSE)   return new Chasse();
+        return new Repos();
     }
 
-    private boolean horsPorteeVerticale(int dy) {
-        return Math.abs(dy) > 50;
-    }
-
-    private boolean estEnPorteeDeFrappe(int dx) {
-        return Math.abs(dx) <= 20;
-    }
-
-    private boolean estEnPorteeDeChasse(int dx) {
-        return Math.abs(dx) <= 180;
-    }
+    private boolean estPretAAgir() { return getPv() >= 0 && sid != null && sid.estVivant(); }
 
     private void arreterAction() {
         frappeEnCours = false;
         setDirection("immobile");
     }
-
-    private void attaquer(int dx) {
-        frappeEnCours = true;
-        setDirection(dx > 0 ? "droite" : "gauche");
-        sid.setEstRalenti(true);
-
-        if (compteurDegats == 0) {
-            sid.decrementerPv(5);
-        }
-
-        compteurDegats++;
-        if (compteurDegats >= 30) {
-            sid.decrementerPv(5);
-            compteurDegats = 0;
-        }
-    }
-
-    private void poursuivre(int dx) {
-        frappeEnCours = false;
-        int deplacementX = (dx > 0 ? VITESSE_X : -VITESSE_X);
-
-        // Vérifie collision latérale
-        hitboxYeti.setPosition(getX() + deplacementX, getY());
-        if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-            setX(getX() + deplacementX);
-        }
-
-        setDirection(dx > 0 ? "droite" : "gauche");
-        hitboxYeti.setPosition(getX(), getY());
-    }
-
-    /*
-     * Applique la gravité au Yeti en mettant à jour sa position verticale,
-     * tout en gérant les collisions avec le terrain.
-    */
-    @Override
-    public void appliquerGravite(int[][] map, int tailleBloc) {
-        vitesseY += GRAVITE;
-        int newY = (int) (getY() + vitesseY);
-
-        int caseX = getX() / tailleBloc;
-        int caseY = (newY + 60) / tailleBloc;
-
-        if (caseY >= map.length || caseX >= map[0].length || caseX < 0) {
-            setY(newY);
-            hitboxYeti.setPosition(getX(), newY);
-        } else {
-            hitboxYeti.setPosition(getX(), newY);
-            if (!collisionAvecBlocs(environnement.getTerrain().getHitboxBlocsSolides())) {
-                setY(newY);
-            } else {
-                vitesseY = 0;
-            }
-        }
-        hitboxYeti.setPosition(getX(), getY());
-    }
-
-    /*
-     * Vérifie si la hitbox du Yeti entre en collision avec un des blocs solides.
-    */
-    public boolean collisionAvecBlocs(ArrayList<Hitbox> blocsSolides) {
-        for (Hitbox bloc : blocsSolides) {
-            if (hitboxYeti.collisionAvec(bloc)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 
 }
