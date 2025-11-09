@@ -25,6 +25,7 @@ public class Yeti extends Acteur {
 
     private final Sid sid;
 
+
     public Yeti(Environnement env, Sid sid) {
         super("Yeti", 100, 800, 350,  60, 60);
         this.sid = sid;
