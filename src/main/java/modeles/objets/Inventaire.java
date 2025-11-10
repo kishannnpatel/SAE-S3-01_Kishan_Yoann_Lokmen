@@ -6,14 +6,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Inventaire {
+    private static final Inventaire INSTANCE = new Inventaire();
     private ObservableList<Item> items;
     private StringProperty objetEnMain = new SimpleStringProperty("pioche");
+
+
+    private Inventaire() {
     public Inventaire() {
         this.items = FXCollections.observableArrayList();
     }
     public ObservableList<Item> getItems() {
         return items;
     }
+
+    public static Inventaire getInstance() {
+        return INSTANCE;
+    }
+
 
     /*
      * Ajoute un objet à l'inventaire avec une quantité de 1.

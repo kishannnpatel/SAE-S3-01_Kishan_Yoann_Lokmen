@@ -13,7 +13,7 @@ import modeles.acteur.Sid;
 import modeles.objets.Inventaire;
 import modeles.objets.Item;
 import modeles.objets.Objets;
-
+import modeles.objets.Inventaire;
 public class InventaireVue {
 
     private HBox conteneur;
@@ -23,10 +23,11 @@ public class InventaireVue {
 
     private Sid sid;
     private ObjetEnMainVue objetEnMainVue;
-
+    private Inventaire inventaire;
     public InventaireVue(HBox conteneur, Sid sid) {
         this.conteneur = conteneur;
         this.sid = sid;
+        this.inventaire = Inventaire.getInstance();
     }
 
 
@@ -35,12 +36,12 @@ public class InventaireVue {
      * Crée 8 cases avec image et quantité, configure les styles et événements souris.
      * Ajoute un listener sur la liste observable des items pour mettre à jour l'affichage.
     */
-    public void initialiserCases(Inventaire inventaire) {
+    public void initialiserCases() {
         conteneur.getChildren().clear();
 
         // Ajout listener pour l'observableList
-        inventaire.getItems().addListener((ListChangeListener<? super Item>) change -> {
-            mettreAJourInventaire(inventaire);
+        this.inventaire.getItems().addListener((ListChangeListener<? super Item>) change -> {
+            mettreAJourInventaire();
         });
 
         for (int i = 0; i < 8; i++) {
@@ -57,17 +58,17 @@ public class InventaireVue {
             final int index = i;
 
             caseObjet.setOnMouseClicked(event -> {
-                if (index < inventaire.getItems().size()) {
-                    Item nouvelItem = inventaire.getItems().get(index);
+                if (index < this.inventaire.getItems().size()) {
+                    Item nouvelItem = this.inventaire.getItems().get(index);
                     Objets nouvelObjet = nouvelItem.getObjet();
 
                     Objets ancienObjet = sid.getObjetEnMain();
                     if (ancienObjet == null || !ancienObjet.equals(nouvelObjet)) {
                         if (ancienObjet != null) {
-                            inventaire.ajouterItem(ancienObjet);
+                            this.inventaire.ajouterItem(ancienObjet);
                         }
                         sid.setObjetEnMain(nouvelObjet);
-                        inventaire.retirerUnItem(nouvelObjet);
+                        this.inventaire.retirerUnItem(nouvelObjet);
                         objetEnMainVue.mettreAJour();  // MAJ de l'objet en main
                     }
                 }
@@ -91,14 +92,15 @@ public class InventaireVue {
     }
 
 
+
     /*
      * Met à jour l'affichage des cases de l'inventaire en fonction des items présents.
      * Affiche l'image et la quantité des objets ou vide la case si aucun item.
     */
-    public void mettreAJourInventaire(Inventaire inventaire) {
+    public void mettreAJourInventaire() {
         for (int i = 0; i < 8; i++) {
-            if (i < inventaire.getItems().size()) {
-                Item item = inventaire.getItems().get(i);
+            if (i < this.inventaire.getItems().size()) {
+                Item item = this.inventaire.getItems().get(i);
 
                 String nomImage = item.getObjet().getNom().toLowerCase();
                 Image image = new Image(getClass().getResourceAsStream("/images/item/" + nomImage + ".png"));

@@ -78,64 +78,97 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        this.env = Environnement.getInstance();
-        TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
-
-        sid = new Sid(env);
-        sidVue = new SidVue(sid, zoneJeu);
-        souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
-        sourisVue = new SourisVue(zoneJeu);
-        pdvVue = new PointsDeVieVue(zoneJeu, sid);
-
-        yeti = new Yeti(env, sid);
-        yetiVue = new YetiVue(yeti, zoneJeu);
-
-        // Création du Sorcier et sa vue
-        sorcier = new Sorcier(env, sid);
-        sorcierVue = new SorcierVue(sorcier, zoneJeu);
-
-        // Ajoute les acteurs dans l'environnement
-        env.ajouterActeur(sid);
-        env.ajouterActeur(yeti);
-        env.ajouterActeur(sorcier);
 
 
 
-        // -------------------------------------------------------------------------------------------
+        /*              Elle se fait ejecter par la méthode initialiserEnvironnementEtActeurs.                    */
 
-        // Inventaire
-        Inventaire inv = sid.getInventaire();
-        sid.getInventaire().ajouter(new Glace(env.getTerrain(), inv, sid),3);
-        sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),8);
+//--------------------SA SAUTE -------------------------initialiserEnvironnementEtActeurs--------------------
+//        this.env = new Environnement(992, 576);
+//        TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
+//
+//        sid = new Sid(env);
+//        sidVue = new SidVue(sid, zoneJeu);
+//        souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
+//        sourisVue = new SourisVue(zoneJeu);
+//        pdvVue = new PointsDeVieVue(zoneJeu, sid);
+//
+//        yeti = new Yeti(env, sid);
+//        yetiVue = new YetiVue(yeti, zoneJeu);
+//
+//        // Création du Sorcier et sa vue
+//        sorcier = new Sorcier(env, sid);
+//        sorcierVue = new SorcierVue(sorcier, zoneJeu);
+//
+//
+//        // Ajoute les acteurs dans l'environnement
+//        env.ajouterActeur(sid);
+//        env.ajouterActeur(yeti);
+//        env.ajouterActeur(sorcier);
+//-----------initialiserEnvironnementEtActeurs--------------------------SA SAUTE-------------------
+
+       /*              Elle se fait ejecter par la méthode initialiserEnvironnementEtActeurs.       Méthode en bas             */
 
 
-        inventaireVue = new InventaireVue(conteneurInventaire, sid);
-        inventaireVue.initialiserCases(inv);
-        inventaireVue.mettreAJourInventaire(inv);
-        conteneurInventaire.setVisible(true);
 
 
-        objetEnMainVue = new ObjetEnMainVue(sid);
 
-        // Positionner en haut à droite
-        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
-        objetEnMainVue.getConteneur().setLayoutY(10);
 
-        zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
 
-        inventaireVue.setObjetEnMainVue(objetEnMainVue);
 
-        // Table de Craft
-        tableCraftVue = new TableCraftVue();
-        zoneJeu.getChildren().add(tableCraftVue.getConteneur());
-        tableCraftVue.getConteneur().setLayoutX(490);
-        tableCraftVue.getConteneur().setLayoutY(10);
 
-        tableCraft = new TableCraft(sid.getInventaire(), sid);
 
-        tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
-        tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
-        tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
+//initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire
+//        Inventaire inv = sid.getInventaire();
+//        sid.getInventaire().ajouter(new Glace(env.getTerrain(), inv, sid),3);
+//        sid.getInventaire().ajouter(new Bois(env.getTerrain(), inv, sid),8);
+//
+//
+//        inventaireVue = new InventaireVue(conteneurInventaire, sid);
+//        inventaireVue.initialiserCases(inv);
+//        inventaireVue.mettreAJourInventaire(inv);
+//        conteneurInventaire.setVisible(true);
+//
+//
+//        objetEnMainVue = new ObjetEnMainVue(sid);
+//
+//        // Positionner en haut à droite
+//        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
+//        objetEnMainVue.getConteneur().setLayoutY(10);
+//
+//        zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
+//
+//        inventaireVue.setObjetEnMainVue(objetEnMainVue);
+//initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire
+
+
+
+
+
+
+//------TABLECRAFT----------TABLECRAFT ----- initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft
+
+//        // Table de Craft
+//        tableCraftVue = new TableCraftVue();
+//        zoneJeu.getChildren().add(tableCraftVue.getConteneur());
+//        tableCraftVue.getConteneur().setLayoutX(490);
+//        tableCraftVue.getConteneur().setLayoutY(10);
+//
+//        tableCraft = new TableCraft(sid.getInventaire(), sid);
+//
+//        tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
+//        tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
+//        tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
+
+//---TABLECRAFT----TABLECRAFT-----initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft
+
+
+
+
+
+
+
+
 
         // ---------------------------------------------------------------------------------
 
@@ -144,29 +177,112 @@ public class Controller {
         zoneJeu.setFocusTraversable(true);
 
 
-        // Utilisation de cela car ne fonctionne pas sans comme nous l'avons vue au cours Sprint1
+
+
+
+
+//----------------------initialiserEvenementsinitialiserEvenementsinitialiserEvenementsinitialiserEvenements----------------------------------------------------
         Platform.runLater(() -> {
-            zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
-            zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
-            zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
-            zoneJeu.setOnMouseMoved(event -> {
-                sourisVue.majPositionCurseur(event.getX(), event.getY());
-            });
-
-            zoneJeu.setOnKeyPressed(event -> {
-                touchesActives.add(event.getCode());
-
-                if (event.getCode() == KeyCode.G) {
-                    boolean isVisible = tableCraftVue.isVisible();
-                    tableCraftVue.setVisible(!isVisible);
-                }
-            });
-
+            initialiserEvenements();
             zoneJeu.requestFocus();
-
             initAnimation();
             gameLoop.play();
         });
+
+        // Utilisation de cela car ne fonctionne pas sans comme nous l'avons vue au cours Sprint1
+//        Platform.runLater(() -> {
+//            zoneJeu.setOnKeyPressed(event -> touchesActives.add(event.getCode()));
+//            zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
+//            zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
+//            zoneJeu.setOnMouseMoved(event -> {
+//                sourisVue.majPositionCurseur(event.getX(), event.getY());
+//            });
+//
+//            zoneJeu.setOnKeyPressed(event -> {
+//                touchesActives.add(event.getCode());
+//
+//                if (event.getCode() == KeyCode.G) {
+//                    boolean isVisible = tableCraftVue.isVisible();
+//                    tableCraftVue.setVisible(!isVisible);
+//                }
+//            });
+//
+//
+//            zoneJeu.requestFocus();
+//
+//            initAnimation();
+//            gameLoop.play();
+//        });
+
+
+//-------------------initialiserEvenementsinitialiserEvenementsinitialiserEvenements------------------------------------------------------------
+
+    }
+
+    private void initialiserInventaire() {
+        Inventaire inv = sid.getInventaire();
+        inv.ajouter(new Glace(env.getTerrain(), inv, sid), 3);
+        inv.ajouter(new Bois(env.getTerrain(), inv, sid), 8);
+
+        inventaireVue = new InventaireVue(conteneurInventaire, sid);
+        inventaireVue.initialiserCases(inv);
+        inventaireVue.mettreAJourInventaire(inv);
+        conteneurInventaire.setVisible(true);
+
+        objetEnMainVue = new ObjetEnMainVue(sid);
+        objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
+        objetEnMainVue.getConteneur().setLayoutY(10);
+        zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
+        inventaireVue.setObjetEnMainVue(objetEnMainVue);
+    }
+    private void initialiserEnvironnementEtActeurs() {
+        this.env = new Environnement(992, 576);
+        TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
+
+        sid = new Sid(env);
+        sidVue = new SidVue(sid, zoneJeu);
+
+        souris = new Souris(sid, env.getTerrain(), terrainVue, tilePane);
+        sourisVue = new SourisVue(zoneJeu);
+        pdvVue = new PointsDeVieVue(zoneJeu, sid);
+
+        yeti = new Yeti(env, sid);
+        yetiVue = new YetiVue(yeti, zoneJeu);
+
+        sorcier = new Sorcier(env, sid);
+        sorcierVue = new SorcierVue(sorcier, zoneJeu);
+
+        env.ajouterActeur(sid);
+        env.ajouterActeur(yeti);
+        env.ajouterActeur(sorcier);
+    }
+
+    private void initialiserTableCraft() {
+        tableCraftVue = new TableCraftVue();
+        zoneJeu.getChildren().add(tableCraftVue.getConteneur());
+        tableCraftVue.getConteneur().setLayoutX(490);
+        tableCraftVue.getConteneur().setLayoutY(10);
+
+        tableCraft = new TableCraft(sid.getInventaire(), sid);
+        tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
+        tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
+        tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
+    }
+
+
+
+
+    private void initialiserEvenements() {
+        zoneJeu.setOnKeyPressed(event -> {
+            touchesActives.add(event.getCode());
+            if (event.getCode() == KeyCode.G) {
+                tableCraftVue.setVisible(!tableCraftVue.isVisible());
+            }
+        });
+
+        zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
+        zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
+        zoneJeu.setOnMouseMoved(event -> sourisVue.majPositionCurseur(event.getX(), event.getY()));
     }
 
 
@@ -184,6 +300,80 @@ public class Controller {
                     temps++;
                 }
         );
+
         gameLoop.getKeyFrames().add(keyFrame);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+private void initialiserInventaire() {
+    Inventaire inv = sid.getInventaire();
+    inv.ajouter(new Glace(env.getTerrain(), inv, sid), 3);
+    inv.ajouter(new Bois(env.getTerrain(), inv, sid), 8);
+
+    inventaireVue = new InventaireVue(conteneurInventaire, sid);
+    inventaireVue.initialiserCases(inv);
+    inventaireVue.mettreAJourInventaire(inv);
+    conteneurInventaire.setVisible(true);
+
+    objetEnMainVue = new ObjetEnMainVue(sid);
+    objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
+    objetEnMainVue.getConteneur().setLayoutY(10);
+    zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
+    inventaireVue.setObjetEnMainVue(objetEnMainVue);
+}
+
+
+private void initialiserTableCraft() {
+    tableCraftVue = new TableCraftVue();
+    zoneJeu.getChildren().add(tableCraftVue.getConteneur());
+    tableCraftVue.getConteneur().setLayoutX(490);
+    tableCraftVue.getConteneur().setLayoutY(10);
+
+    tableCraft = new TableCraft(sid.getInventaire(), sid);
+    tableCraftVue.getBoutonPioche().setOnAction(e -> tableCraft.crafterPioche());
+    tableCraftVue.getBoutonDague().setOnAction(e -> tableCraft.crafterDague());
+    tableCraftVue.getBoutonArc().setOnAction(e -> tableCraft.crafterArc());
+}
+
+
+
+
+private void initialiserEvenements() {
+    zoneJeu.setOnKeyPressed(event -> {
+        touchesActives.add(event.getCode());
+        if (event.getCode() == KeyCode.G) {
+            tableCraftVue.setVisible(!tableCraftVue.isVisible());
+        }
+    });
+
+    zoneJeu.setOnKeyReleased(event -> touchesActives.remove(event.getCode()));
+    zoneJeu.setOnMouseClicked(event -> souris.gererClic(event));
+    zoneJeu.setOnMouseMoved(event -> sourisVue.majPositionCurseur(event.getX(), event.getY()));
+}
+
+DANS INITIALIZE :
+Platform.runLater(() -> {
+    initialiserEvenements();
+    zoneJeu.requestFocus();
+    initAnimation();
+    gameLoop.play();
+});
+
+ */
