@@ -11,7 +11,6 @@ public class Inventaire {
     private StringProperty objetEnMain = new SimpleStringProperty("pioche");
 
 
-    private Inventaire() {
     public Inventaire() {
         this.items = FXCollections.observableArrayList();
     }

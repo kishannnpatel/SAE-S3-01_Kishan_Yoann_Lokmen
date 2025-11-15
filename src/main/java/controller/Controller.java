@@ -111,13 +111,6 @@ public class Controller {
 
 
 
-
-
-
-
-
-
-
 //initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire
 //        Inventaire inv = sid.getInventaire();
 //        sid.getInventaire().ajouter(new Glace(env.getTerrain(), inv, sid),3);
@@ -142,10 +135,6 @@ public class Controller {
 //initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire initialiserInventaire
 
 
-
-
-
-
 //------TABLECRAFT----------TABLECRAFT ----- initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft
 
 //        // Table de Craft
@@ -163,13 +152,6 @@ public class Controller {
 //---TABLECRAFT----TABLECRAFT-----initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft initialiserTableCraft
 
 
-
-
-
-
-
-
-
         // ---------------------------------------------------------------------------------
 
         // Focus sur les élements du fxml
@@ -177,12 +159,12 @@ public class Controller {
         zoneJeu.setFocusTraversable(true);
 
 
-
-
-
-
 //----------------------initialiserEvenementsinitialiserEvenementsinitialiserEvenementsinitialiserEvenements----------------------------------------------------
         Platform.runLater(() -> {
+            initialiserEnvironnementEtActeurs();
+            initialiserInventaire();
+            initialiserTableCraft();
+
             initialiserEvenements();
             zoneJeu.requestFocus();
             initAnimation();
@@ -220,23 +202,31 @@ public class Controller {
     }
 
     private void initialiserInventaire() {
-        Inventaire inv = sid.getInventaire();
+
+        Inventaire inv = Inventaire.getInstance();
+
         inv.ajouter(new Glace(env.getTerrain(), inv, sid), 3);
         inv.ajouter(new Bois(env.getTerrain(), inv, sid), 8);
 
+
         inventaireVue = new InventaireVue(conteneurInventaire, sid);
-        inventaireVue.initialiserCases(inv);
-        inventaireVue.mettreAJourInventaire(inv);
+        inventaireVue.initialiserCases();
+        inventaireVue.mettreAJourInventaire();
         conteneurInventaire.setVisible(true);
 
         objetEnMainVue = new ObjetEnMainVue(sid);
         objetEnMainVue.getConteneur().setLayoutX(zoneJeu.getPrefWidth() - 70);
         objetEnMainVue.getConteneur().setLayoutY(10);
         zoneJeu.getChildren().add(objetEnMainVue.getConteneur());
+
         inventaireVue.setObjetEnMainVue(objetEnMainVue);
     }
     private void initialiserEnvironnementEtActeurs() {
-        this.env = new Environnement(992, 576);
+
+        this.env = Environnement.getInstance();
+
+        env.initEnvironnement(992, 576);
+
         TerrainVue terrainVue = new TerrainVue(env.getTerrain(), tilePane);
 
         sid = new Sid(env);
@@ -304,21 +294,6 @@ public class Controller {
         gameLoop.getKeyFrames().add(keyFrame);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*
